@@ -1,0 +1,160 @@
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
+import Navbar from "../components/Navbar";
+import { onAuthStateChanged } from "firebase/auth";
+import { firebaseAuth } from "../utils/firebase-config";
+import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchMovies, getGenres } from "../store";
+import { FaPlay } from "react-icons/fa";
+import { AiOutlineInfoCircle } from "react-icons/ai";
+import Slider from "../components/Slider";
+
+function Netflix() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  const movies = useSelector((state) => state.netflix.movies);
+  const genres = useSelector((state) => state.netflix.genres);
+  const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
+  const [email, setEmail] = useState("");
+  const getMoviesFromRange = (from, to) => {
+
+    return movies?.slice(from, to);
+  };
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getGenres());
+  }, []);
+  useEffect(() => {
+    onAuthStateChanged(firebaseAuth, (currentUser) => {
+      if (!currentUser) navigate("/login");
+      else setEmail(currentUser.email);
+    });
+  }, [])
+  useEffect(() => {
+    if (genresLoaded) {
+      dispatch(fetchMovies({ genres, type: "all" }));
+    }
+  }, [genresLoaded]);
+
+
+
+  window.onscroll = () => {
+    setIsScrolled(window.scrollY === 0 ? false : true);
+    return () => (window.onscroll = null);
+  };
+
+  var data = getMoviesFromRange(0, 100);
+  var x = Math.floor(Math.random() * data.length)
+  var mv = data[x]
+  if (!mv) {
+    mv = {
+      "id": 453395,
+      "name": "Doctor Strange in the Multiverse of Madness",
+      "image": "/wcKFYIiVDvRURrzglV9kGu7fpfY.jpg",
+      "genres": [
+        "Fantasy",
+        "Action",
+        "Adventure"
+      ]
+    }
+
+  }
+  return (
+    <Container>
+      <Navbar isScrolled={isScrolled} email={email} />
+      <div className="hero">
+        <img
+          src={`https://image.tmdb.org/t/p/original/${mv.image}`}
+          alt="background"
+          className="background-image"
+        />
+        <div className="container">
+          <div className="logo">
+            {mv.name}
+          </div>
+          <div className="buttons flex">
+            <button
+              onClick={() => navigate("/player", { state: { id: mv } })}
+              className="flex j-center a-center"
+            >
+              <FaPlay />
+              Play
+            </button>
+            <button onClick={() => navigate("/info", { state: { id: mv } })} className="flex j-center a-center">
+              <AiOutlineInfoCircle />
+              More Info
+            </button>
+          </div>
+        </div>
+      </div>
+      <Slider movies={movies} />
+    </Container>
+  );
+}
+
+const Container = styled.div`
+  background-color: black;
+  .hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 703px;
+
+    .background-image {
+      filter: brightness(60%);
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0rem;
+      left: 0rem;
+    }
+    img {
+      height: 100%;
+      width: 100vw;
+    }
+    .container {
+      position: relative;
+      z-index: 5;
+      margin-top: 6rem;
+
+      .logo {
+          width: 50%;
+          height: 100%;
+          margin-left: 5rem;
+          font-size: 4rem;
+          font-weight: bold;
+      }
+      .buttons {
+        margin: 4.5rem 5rem;
+        gap: 2rem;
+        button {
+          font-size: 1.4rem;
+          gap: 1rem;
+          border-radius: 0.2rem;
+          padding: 0.5rem;
+          padding-left: 2rem;
+          padding-right: 2.4rem;
+          border: none;
+          cursor: pointer;
+          transition: 0.2s ease-in-out;
+          &:hover {
+            opacity: 0.8;
+          }
+          &:nth-of-type(2) {
+            background-color: rgba(109, 109, 110, 0.7);
+            color: white;
+            svg {
+              font-size: 1.8rem;
+            }
+          }
+        }
+      }
+    }
+  }
+`;
+
+export default Netflix;
