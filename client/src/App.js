@@ -1,41 +1,30 @@
-import React, { Suspense, lazy } from "react";
+import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import ProtectedRoute from "./components/ProtectedRoute";
 
-const Login = lazy(() => import('./pages/Login'));
-const MoviePage = lazy(() => import('./pages/Movies'));
-const Netflix = lazy(() => import('./pages/Netflix'));
-const Player = lazy(() => import('./pages/Player'));
-const Signup = lazy(() => import('./pages/Signup'));
-const TVShows = lazy(() => import('./pages/TVShows'));
-const Info = lazy(() => import('./pages/Info'));
-const UserListedMovies = lazy(() => import('./pages/UserListedMovies'));
+import Login from './pages/Login';
+import Movies from './pages/Movies'
+import Home from './pages/Home';
+import Player from './pages/Player';
+import Signup from './pages/Signup';
+import TVShows from './pages/TVShows';
+import Info from './pages/Info';
+import ListedMovies from './pages/ListedMovies';
 
 export default function App() {
-  const d1 = "M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z";
-
-  const d2 = "M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z";
-
   return (
     <BrowserRouter>
-      <Suspense fallback={<div role="status" className="loader">
-        <svg aria-hidden="true" className="w-14 h-14 text-gray-200 animate-spin dark:text-gray-600 fill-red-500" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d={d1} fill="currentColor" />
-          <path d={d2} fill="currentFill" />
-        </svg>
-        <span className="sr-only">Loading...</span>
-      </div>}>
-        <Routes>
-          <Route exact path="/" element={<Netflix />} />
-          <Route exact path="/login" element={<Login />} />
-          <Route exact path="/signup" element={<Signup />} />
-          <Route exact path="/player" element={<Player />} />
-          <Route exact path="/tv" element={<TVShows />} />
-          <Route exact path="/movies" element={<MoviePage />} />
-          <Route exact path="/info" element={<Info />} />
-          <Route exact path="/new" element={<Player />} />
-          <Route exact path="/mylist" element={<UserListedMovies />} />
-        </Routes>
-      </Suspense>
+      <Routes>
+        <Route path="/" element={<ProtectedRoute path={'/'} component={Home} />} />
+        <Route path="/sign-in" element={<ProtectedRoute path={'/sign-in'} component={Login} />} />
+        <Route path="/sign-up" element={<ProtectedRoute path={'/sign-up'} component={Signup} />} />
+        <Route path="/player" element={<ProtectedRoute path={'/player'} component={Player} />} />
+        <Route path="/tv-shows" element={<ProtectedRoute path={'/tv-shows'} component={TVShows} />} />
+        <Route path="/movies" element={<ProtectedRoute path={'/movies'} component={Movies} />} />
+        <Route path="/info" element={<ProtectedRoute path={'/info'} component={Info} />} />
+        <Route path="/new" element={<ProtectedRoute path={'/new'} component={Player} />} />
+        <Route path="/my-list" element={<ProtectedRoute path={'/my-list'} component={ListedMovies} />} />
+      </Routes>
     </BrowserRouter>
   );
 }

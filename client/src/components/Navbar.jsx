@@ -1,24 +1,33 @@
 import { signOut } from "firebase/auth";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/logo.png";
 import { firebaseAuth } from "../utils/firebase-config";
 import { FaPowerOff, FaSearch } from "react-icons/fa";
+import { toast } from "react-toastify";
 
-export default function Navbar(props) {
+export default function Navbar({ style, email }) {
+  const navigate = useNavigate();
   const [showSearch, setShowSearch] = useState(false);
   const [inputHover, setInputHover] = useState(false);
   const links = [
     { name: "Home", link: "/" },
-    { name: "TV Shows", link: "/tv" },
+    { name: "TV Shows", link: "/tv-shows" },
     { name: "Movies", link: "/movies" },
-    { name: "My List", link: "/mylist" },
+    { name: "My List", link: "/my-list" },
   ];
+
+  const handleUserSignOut = () => {
+    localStorage.removeItem('isLoggedIn');
+    signOut(firebaseAuth);
+    toast.success('Signed out successfully!');
+    navigate('/sign-in');
+  }
 
   return (
     <Container>
-      <nav className={`${props.isScrolled ? "scrolled" : ""} flex`}>
+      <nav className={`flex`} style={{ ...style }}>
         <div className="left flex a-center">
           <div className="brand flex a-center j-center">
             <img src={logo} alt="Logo" />
@@ -34,7 +43,7 @@ export default function Navbar(props) {
           </ul>
         </div>
         <div className="right flex a-center">
-          <span>{props.email}</span>
+          <span>{email}</span>
 
           <div className={`search ${showSearch ? "show-search" : ""}`}>
             <button
@@ -59,7 +68,7 @@ export default function Navbar(props) {
             />
           </div>
 
-          <button onClick={() => signOut(firebaseAuth)}>
+          <button onClick={handleUserSignOut}>
             <FaPowerOff />
           </button>
         </div>
@@ -69,9 +78,6 @@ export default function Navbar(props) {
 }
 
 const Container = styled.div`
-  .scrolled {
-    background-color: black;
-  }
   nav {
     position: sticky;
     top: 0;

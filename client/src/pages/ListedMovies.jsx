@@ -1,47 +1,46 @@
 import axios from "axios";
 import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { firebaseAuth } from "../utils/firebase-config";
 import Card from "../components/Card";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import { getUsersLikedMovies } from "../store";
 import { useDispatch, useSelector } from "react-redux";
+import NotAvailable from "../components/NotAvailable";
+import Loader from "../components/Loader";
 
-export default function UserListedMovies() {
+export default function ListedMovies() {
   const movies = useSelector((state) => state.netflix.movies);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const [isScrolled, setIsScrolled] = useState(false);
   const [email, setEmail] = useState(undefined);
-
-  onAuthStateChanged(firebaseAuth, (currentUser) => {
-    // console.log("Inside onAuthStateChanged", currentUser);
-    if (currentUser) setEmail(currentUser.email);
-    else navigate("/login");
-  });
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // console.log("Inside useEffect", email);
-    if (email) {
-      dispatch(getUsersLikedMovies(email));
-    }
+    onAuthStateChanged(firebaseAuth, (currentUser) => {
+      if (currentUser) setEmail(currentUser.email);
+    });
+
+    if (email) dispatch(getUsersLikedMovies(email));
   }, [email]);
 
-  window.onscroll = () => {
+  window.addEventListener('scroll', () => {
     setIsScrolled(window.scrollY === 0 ? false : true);
-    return () => (window.onscroll = null);
-  };
+  });
+
+  setTimeout(() => {
+    setLoading(false);
+  }, 6000);
 
   return (
     <Container>
-      <Navbar isScrolled={isScrolled} email={email} />
+      <Navbar style={{ backgroundColor: isScrolled && 'black' }} email={email} />
       <div className="content flex column">
         <h1>My List</h1>
         <div className="grid flex">
-          {movies && movies.length > 0 ? (
-            movies.map((movie, index) => (
+          {loading ? <Loader style={{ marginTop: '4rem' }} /> : movies?.length > 0 ? (
+            movies?.map((movie, index) => (
               <Card
                 movieData={movie}
                 index={index}
@@ -49,9 +48,7 @@ export default function UserListedMovies() {
                 isLiked={true}
               />
             ))
-          ) : (
-            <div>No liked movies found.</div>
-          )}
+          ) : <NotAvailable text={'No Liked Movies Found!'} />}
         </div>
       </div>
     </Container>
@@ -60,6 +57,8 @@ export default function UserListedMovies() {
 
 
 const Container = styled.div`
+  margin-bottom: 2.8rem;
+
   .content {
     margin: 2.3rem;
     margin-top: 8rem;

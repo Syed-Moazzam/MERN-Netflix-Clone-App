@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import styled from "styled-components";
 import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 import Card from "./Card";
+
 export default React.memo(function CardSlider({ data, title }) {
   const listRef = useRef();
   const [sliderPosition, setSliderPosition] = useState(0);
@@ -28,21 +29,19 @@ export default React.memo(function CardSlider({ data, title }) {
       <h1>{title}</h1>
       <div className="wrapper">
         <div
-          className={`slider-action left ${
-            !showControls ? "none" : ""
-          } flex j-center a-center`}
+          className={`slider-action left ${!showControls ? "none" : ""
+            } flex j-center a-center`}
         >
           <AiOutlineLeft onClick={() => handleDirection("left")} />
         </div>
         <div className="slider flex" ref={listRef}>
-          {data.map((movie, index) => {
+          {data?.map((movie, index) => {
             return <Card movieData={movie} index={index} key={movie.id} />;
           })}
         </div>
         <div
-          className={`slider-action right ${
-            !showControls ? "none" : ""
-          } flex j-center a-center`}
+          className={`slider-action right ${!showControls ? "none" : ""
+            } flex j-center a-center`}
         >
           <AiOutlineRight onClick={() => handleDirection("right")} />
         </div>
@@ -56,6 +55,7 @@ const Container = styled.div`
   padding: 2rem 0;
   h1 {
     margin-left: 50px;
+    font-weight: 500;
   }
   .wrapper {
     .slider {

@@ -1,72 +1,70 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
-import CardSlider from "../components/CardSlider";
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
 import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMovies, getGenres } from "../store";
-import SelectGenre from "../components/SelectGenre";
 import Slider from "../components/Slider";
 import NotAvailable from "../components/NotAvailable";
+import Loader from "../components/Loader";
+import GenreDropDown from "../components/GenreDropDown";
 
-function MoviePage() {
+function Movies() {
   const [isScrolled, setIsScrolled] = useState(false);
   const movies = useSelector((state) => state.netflix.movies);
   const genres = useSelector((state) => state.netflix.genres);
   const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
   const [email, setEmail] = useState("");
+  const [user, setUser] = useState(undefined);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getGenres());
-  }, []);
-
-  useEffect(() => {
     if (genresLoaded) {
       dispatch(fetchMovies({ genres, type: "movie" }));
     }
+
+    dispatch(getGenres());
+    onAuthStateChanged(firebaseAuth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser.uid);
+        setEmail(currentUser.email);
+      }
+    });
   }, [genresLoaded]);
 
-  const [user, setUser] = useState(undefined);
 
-  onAuthStateChanged(firebaseAuth, (currentUser) => {
-    if (currentUser) {
-      setUser(currentUser.uid);
-      setEmail(currentUser.email);
-    }
-    else navigate("/login");
+  window.addEventListener('scroll', () => {
+    setIsScrolled(window.scrollY === 0 ? false : true);
   });
 
-  window.onscroll = () => {
-    setIsScrolled(window.scrollY === 0 ? false : true);
-    return () => (window.onscroll = null);
-  };
+  setTimeout(() => {
+    setLoading(false);
+  }, 6000);
 
   return (
     <Container>
       <div className="navbar">
-        <Navbar isScrolled={isScrolled} email={email} />
+        <Navbar style={{ backgroundColor: isScrolled && 'black' }} email={email} />
       </div>
       <div className="data">
-        <SelectGenre genres={genres} type="movie" />
-        {movies?.length ? <Slider movies={movies} /> : <NotAvailable />}
+        <GenreDropDown genres={genres} type="movie" setLoading={setLoading} />
+        {loading ? <Loader style={{ marginTop: '5rem' }} /> : movies?.length ? <Slider movies={movies} /> : <NotAvailable text={'No Movies Available For The Selected Genre! Please Select A Different Genre.'} />}
       </div>
     </Container>
   );
 }
 
 const Container = styled.div`
+  margin-bottom: 2.8rem;
+
   .data {
     margin-top: 8rem;
-    .not-available {
-      text-align: center;
-      color: white;
-      margin-top: 4rem;
-    }
   }
 `;
-export default MoviePage;
+
+export default Movies;

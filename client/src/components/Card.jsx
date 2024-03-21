@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IoPlayCircleSharp } from "react-icons/io5";
@@ -7,24 +7,26 @@ import { RiThumbUpFill, RiThumbDownFill } from "react-icons/ri";
 import { BiChevronDown } from "react-icons/bi";
 import { BsCheck } from "react-icons/bs";
 import axios from "axios";
-import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
 import { useDispatch } from "react-redux";
 import { removeMovieFromLiked } from "../store";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { onAuthStateChanged } from "firebase/auth";
 
-export default React.memo(function Card({ index, movieData, isLiked = false }) {
+export default React.memo(function Card({ movieData, isLiked = false }) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isHovered, setIsHovered] = useState(false);
   const [email, setEmail] = useState(undefined);
 
-  onAuthStateChanged(firebaseAuth, (currentUser) => {
-    if (currentUser) {
-      setEmail(currentUser.email);
-    } else navigate("/login");
-  });
+  useEffect(() => {
+    onAuthStateChanged(firebaseAuth, (currentUser) => {
+      if (currentUser) {
+        setEmail(currentUser.email);
+      }
+    });
+  }, []);
 
   const addToList = async () => {
     try {

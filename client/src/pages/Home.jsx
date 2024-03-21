@@ -9,46 +9,39 @@ import { fetchMovies, getGenres } from "../store";
 import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import Slider from "../components/Slider";
+import Loader from "../components/Loader";
 
-function Netflix() {
-  const [isScrolled, setIsScrolled] = useState(false);
-
+function Home() {
   const movies = useSelector((state) => state.netflix.movies);
   const genres = useSelector((state) => state.netflix.genres);
   const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
-  const [email, setEmail] = useState("");
-  const getMoviesFromRange = (from, to) => {
 
-    return movies?.slice(from, to);
-  };
+  const [email, setEmail] = useState("");
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getGenres());
-  }, []);
-  useEffect(() => {
-    onAuthStateChanged(firebaseAuth, (currentUser) => {
-      if (!currentUser) navigate("/login");
-      else setEmail(currentUser.email);
-    });
-  }, [])
+  const getMoviesFromRange = (from, to) => {
+    return movies?.slice(from, to);
+  };
+
   useEffect(() => {
     if (genresLoaded) {
       dispatch(fetchMovies({ genres, type: "all" }));
     }
+
+    onAuthStateChanged(firebaseAuth, (currentUser) => {
+      if (currentUser) setEmail(currentUser.email);
+    });
+
+    dispatch(getGenres());
   }, [genresLoaded]);
 
-
-
-  window.onscroll = () => {
-    setIsScrolled(window.scrollY === 0 ? false : true);
-    return () => (window.onscroll = null);
-  };
-
   var data = getMoviesFromRange(0, 100);
-  var x = Math.floor(Math.random() * data.length)
-  var mv = data[x]
+  var x = Math.floor(Math.random() * data?.length);
+  var mv = x && data[x];
   if (!mv) {
     mv = {
       "id": 453395,
@@ -60,43 +53,57 @@ function Netflix() {
         "Adventure"
       ]
     }
-
   }
+
+  setTimeout(() => {
+    setLoading(false);
+  }, 2000);
+
+  window.addEventListener('scroll', () => {
+    setIsScrolled(window.scrollY === 0 ? false : true);
+  });
+
   return (
     <Container>
-      <Navbar isScrolled={isScrolled} email={email} />
-      <div className="hero">
-        <img
-          src={`https://image.tmdb.org/t/p/original/${mv.image}`}
-          alt="background"
-          className="background-image"
-        />
-        <div className="container">
-          <div className="logo">
-            {mv.name}
+      {loading ? <Loader style={{ height: '703px' }} /> :
+        <>
+          <Navbar style={{ backgroundColor: isScrolled && 'black' }} email={email} />
+          <div className="hero">
+            <img
+              src={`https://image.tmdb.org/t/p/original/${mv.image}`}
+              alt="background"
+              className="background-image"
+            />
+            <div className="container">
+              <div className="logo">
+                {mv.name}
+              </div>
+              <div className="buttons flex">
+                <button
+                  onClick={() => navigate("/player", { state: { id: mv } })}
+                  className="flex j-center a-center"
+                >
+                  <FaPlay />
+                  Play
+                </button>
+                <button onClick={() => navigate("/info", { state: { id: mv } })} className="flex j-center a-center">
+                  <AiOutlineInfoCircle />
+                  More Info
+                </button>
+              </div>
+            </div>
           </div>
-          <div className="buttons flex">
-            <button
-              onClick={() => navigate("/player", { state: { id: mv } })}
-              className="flex j-center a-center"
-            >
-              <FaPlay />
-              Play
-            </button>
-            <button onClick={() => navigate("/info", { state: { id: mv } })} className="flex j-center a-center">
-              <AiOutlineInfoCircle />
-              More Info
-            </button>
-          </div>
-        </div>
-      </div>
-      <Slider movies={movies} />
+          <Slider movies={movies} />
+        </>
+      }
     </Container>
   );
 }
 
 const Container = styled.div`
   background-color: black;
+  margin-bottom: 2.8rem;
+
   .hero {
     position: relative;
     display: flex;
@@ -157,4 +164,4 @@ const Container = styled.div`
   }
 `;
 
-export default Netflix;
+export default Home;

@@ -1,8 +1,11 @@
 {
-  "name": "netflex",
+  "name": "netflix-clone-app",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.0",
     "@reduxjs/toolkit": "^1.9.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -10,6 +13,7 @@
     "axios": "^1.2.1",
     "bootstrap": "^5.3.3",
     "firebase": "^9.15.0",
+    "framer-motion": "^11.0.20",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",

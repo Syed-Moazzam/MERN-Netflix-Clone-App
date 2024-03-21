@@ -2,22 +2,26 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { fetchDataByGenre } from "../store";
-export default function SelectGenre({ genres, type }) {
+
+export default function GenreDropDown({ genres, type, setLoading }) {
   const dispatch = useDispatch();
+
+  const handleDropDownChange = (e) => {
+    setLoading(true);
+    dispatch(
+      fetchDataByGenre({
+        genres,
+        genre: e.target.value,
+        type,
+      }));
+  }
+
   return (
     <Select
       className="flex"
-      onChange={(e) => {
-        dispatch(
-          fetchDataByGenre({
-            genres,
-            genre: e.target.value,
-            type,
-          })
-        );
-      }}
+      onChange={handleDropDownChange}
     >
-      {genres.map((genre) => {
+      {genres?.map((genre) => {
         return (
           <option value={genre.id} key={genre.id}>
             {genre.name}
@@ -31,7 +35,9 @@ export default function SelectGenre({ genres, type }) {
 const Select = styled.select`
   margin-left: 5rem;
   cursor: pointer;
-  font-size: 1.4rem;
-  background-color: rgba(0, 0, 0, 0.4);
+  outline: none;
+  font-size: 1.1rem;
+  background-color: black;
+  width: fit-content;
   color: white;
 `;

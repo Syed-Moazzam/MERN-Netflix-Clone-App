@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
 import Header from "../components/Header";
 import Footer from '../components/Footer';
@@ -16,18 +16,14 @@ function Login() {
   const handleLogin = async () => {
     try {
       await signInWithEmailAndPassword(firebaseAuth, email, password);
+      localStorage.setItem('isLoggedIn', true);
       toast.success("Signin successful! Welcome aboard!");
-
+      navigate('/');
     } catch (error) {
       console.log(error.code);
       toast.error("Signin failed. Please try again.");
-
     }
   };
-
-  onAuthStateChanged(firebaseAuth, (currentUser) => {
-    if (currentUser) navigate("/");
-  });
 
   return (
     <div className="relative w-screen z-10" style={{ height: '703px' }}>
@@ -65,7 +61,7 @@ function Login() {
           </div>
           <div className="text-white mt-4">
             New to Netflix?{" "}
-            <Link to='/signup' style={{ color: 'rgb(229, 9, 20)' }}>
+            <Link to='/sign-up' style={{ color: 'rgb(229, 9, 20)', fontWeight: '500' }}>
               Sign up now.
             </Link>
             <br />

@@ -11,7 +11,7 @@ export default function Header(props) {
         <img className="h-16" src={logo} alt="logo" />
       </div>
       <button
-        onClick={() => navigate(props.login ? "/login" : "/signup")}
+        onClick={() => navigate(props.login ? "/sign-in" : "/sign-up")}
         className={'px-4 py-2 rounded text-white font-bold text-md'}
         style={{ backgroundColor: 'rgb(229, 9, 20)' }}
       >
