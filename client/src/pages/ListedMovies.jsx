@@ -39,7 +39,7 @@ export default function ListedMovies() {
       <div className="content flex column">
         <h1>My List</h1>
         <div className="grid flex">
-          {loading ? <Loader style={{ marginTop: '4rem' }} /> : movies?.length > 0 ? (
+          {loading ? <Loader style={{ marginTop: '3.5rem' }} /> : movies?.length > 0 ? (
             movies?.map((movie, index) => (
               <Card
                 movieData={movie}

@@ -49,7 +49,7 @@ function TVShows() {
       <Navbar style={{ backgroundColor: isScrolled && 'black' }} email={email} />
       <div className="data">
         <GenreDropDown genres={genres} type="tv" setLoading={setLoading} />
-        {loading ? <Loader style={{ marginTop: '5rem' }} /> : movies?.length ?
+        {loading ? <Loader style={{ marginTop: '6rem' }} /> : movies?.length ?
           <Slider movies={movies} />
           : <NotAvailable text={'No TV Shows Available For The Selected Genre! Please Select A Different Genre.'} />}
       </div>

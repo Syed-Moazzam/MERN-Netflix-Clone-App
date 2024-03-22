@@ -53,7 +53,7 @@ function Movies() {
       </div>
       <div className="data">
         <GenreDropDown genres={genres} type="movie" setLoading={setLoading} />
-        {loading ? <Loader style={{ marginTop: '5rem' }} /> : movies?.length ? <Slider movies={movies} /> : <NotAvailable text={'No Movies Available For The Selected Genre! Please Select A Different Genre.'} />}
+        {loading ? <Loader style={{ marginTop: '6rem' }} /> : movies?.length ? <Slider movies={movies} /> : <NotAvailable text={'No Movies Available For The Selected Genre! Please Select A Different Genre.'} />}
       </div>
     </Container>
   );

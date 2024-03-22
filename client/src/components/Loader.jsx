@@ -7,7 +7,7 @@ const Loader = ({ style }) => {
 
     return (
         <div role="status" className="loader" style={{ ...style }}>
-            <svg aria-hidden="true" className="w-14 h-14 text-gray-200 animate-spin dark:text-gray-600 fill-red-500" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg aria-hidden="true" className="w-14 h-14 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ fill: '#E50914' }}>
                 <path d={d1} fill="currentColor" />
                 <path d={d2} fill="currentFill" />
             </svg>
