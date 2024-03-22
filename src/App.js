@@ -16,7 +16,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<ProtectedRoute path={'/'} component={Home} />} />
-        <Route path="/sign-in" element={<ProtectedRoute path={'/sign-in'} component={Login} />} />
+        <Route path="/login" element={<ProtectedRoute path={'/login'} component={Login} />} />
         <Route path="/sign-up" element={<ProtectedRoute path={'/sign-up'} component={Signup} />} />
         <Route path="/player" element={<ProtectedRoute path={'/player'} component={Player} />} />
         <Route path="/tv-shows" element={<ProtectedRoute path={'/tv-shows'} component={TVShows} />} />

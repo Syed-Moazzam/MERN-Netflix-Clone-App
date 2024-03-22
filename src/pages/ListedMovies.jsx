@@ -62,14 +62,16 @@ const Container = styled.div`
   .content {
     margin: 2.3rem;
     margin-top: 8rem;
-    gap: 3rem;
+    gap: 2rem;
     h1 {
-      margin-left: 3rem;
+      margin-left: 2rem;
       color: white;
+      font-weight: 500;
     }
     .grid {
       flex-wrap: wrap;
       gap: 1rem;
+      margin-left: 2rem;
     }
   }
 `;

@@ -22,7 +22,7 @@ export default function Navbar({ style, email }) {
     localStorage.removeItem('isLoggedIn');
     signOut(firebaseAuth);
     toast.success('Signed out successfully!');
-    navigate('/sign-in');
+    navigate('/login');
   }
 
   return (

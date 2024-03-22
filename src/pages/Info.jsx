@@ -1,19 +1,24 @@
-import { React } from "react";
+import { React, useState } from "react";
 import styled from "styled-components";
 import { BsArrowLeft } from "react-icons/bs";
 import { useNavigate, useLocation } from "react-router-dom";
+import Loader from '../components/Loader';
+
 export default function Info() {
   const navigate = useNavigate();
   const location = useLocation();
   const movie = location.state.id;
   var x = movie.genres;
 
-  console.log(x)
-  // https://api.themoviedb.org/3/movie/453395?api_key=6d75b2a2e2b05ca51b4dda2ad6426fda&append_to_response=videos
+  const [loading, setLoading] = useState(true);
+
+  setTimeout(() => {
+    setLoading(false);
+  }, 1500);
 
   return (
     <Container>
-      <div className="player">
+      {loading ? <Loader style={{ height: '703px' }} /> : <div className="player">
         <div className="back">
           <BsArrowLeft onClick={() => navigate(-1)} />
         </div>
@@ -34,7 +39,7 @@ export default function Info() {
 
           </div>
         </div>
-      </div>
+      </div>}
     </Container>
   );
 }
@@ -58,7 +63,7 @@ const Container = styled.div`
       text-align: center;
       color: white;
       img{
-        height: 60%;
+        height: 425px;
         width: 60%;
         margin: 3.5rem auto 2rem;
       }
