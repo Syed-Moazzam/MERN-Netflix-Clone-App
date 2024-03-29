@@ -24,6 +24,9 @@ function TVShows() {
   useEffect(() => {
     if (genresLoaded) {
       dispatch(fetchMovies({ genres, type: "tv" }));
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     }
 
     if (!genres.length) dispatch(getGenres());
@@ -40,10 +43,6 @@ function TVShows() {
     setIsScrolled(window.scrollY === 0 ? false : true);
   });
 
-  setTimeout(() => {
-    setLoading(false);
-  }, 6000);
-
   return (
     <Container>
       <Navbar style={{ backgroundColor: isScrolled && 'black' }} email={email} />
@@ -51,7 +50,7 @@ function TVShows() {
         <GenreDropDown genres={genres} type="tv" setLoading={setLoading} />
         {loading ? <Loader style={{ marginTop: '6rem' }} /> : movies?.length ?
           <Slider movies={movies} />
-          : <NotAvailable text={'No TV Shows Available For The Selected Genre! Please Select A Different Genre.'} />}
+          : <NotAvailable customStyling={{ marginTop: '5rem' }} text={'No TV Shows Available For The Selected Genre! Please Select A Different Genre.'} />}
       </div>
     </Container>
   );

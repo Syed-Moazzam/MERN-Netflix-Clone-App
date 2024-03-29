@@ -30,6 +30,9 @@ function Home() {
   useEffect(() => {
     if (genresLoaded) {
       dispatch(fetchMovies({ genres, type: "all" }));
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     }
 
     onAuthStateChanged(firebaseAuth, (currentUser) => {
@@ -54,10 +57,6 @@ function Home() {
       ]
     }
   }
-
-  setTimeout(() => {
-    setLoading(false);
-  }, 2000);
 
   window.addEventListener('scroll', () => {
     setIsScrolled(window.scrollY === 0 ? false : true);

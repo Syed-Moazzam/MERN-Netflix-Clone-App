@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Navbar from "../components/Navbar";
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
-import { useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchMovies, getGenres } from "../store";
 import Slider from "../components/Slider";
@@ -20,12 +19,14 @@ function Movies() {
   const [user, setUser] = useState(undefined);
   const [loading, setLoading] = useState(true);
 
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (genresLoaded) {
       dispatch(fetchMovies({ genres, type: "movie" }));
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
     }
 
     dispatch(getGenres());
@@ -42,10 +43,6 @@ function Movies() {
     setIsScrolled(window.scrollY === 0 ? false : true);
   });
 
-  setTimeout(() => {
-    setLoading(false);
-  }, 6000);
-
   return (
     <Container>
       <div className="navbar">
@@ -53,7 +50,7 @@ function Movies() {
       </div>
       <div className="data">
         <GenreDropDown genres={genres} type="movie" setLoading={setLoading} />
-        {loading ? <Loader style={{ marginTop: '6rem' }} /> : movies?.length ? <Slider movies={movies} /> : <NotAvailable text={'No Movies Available For The Selected Genre! Please Select A Different Genre.'} />}
+        {loading ? <Loader style={{ marginTop: '6rem' }} /> : movies?.length ? <Slider movies={movies} /> : <NotAvailable customStyling={{ marginTop: '5rem' }} text={'No Movies Available For The Selected Genre! Please Select A Different Genre.'} />}
       </div>
     </Container>
   );
@@ -64,6 +61,10 @@ const Container = styled.div`
 
   .data {
     margin-top: 8rem;
+  }
+
+  .movies-not-available {
+    margin-top: 1rem;
   }
 `;
 

@@ -16,6 +16,7 @@ export default function ListedMovies() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [email, setEmail] = useState(undefined);
   const [loading, setLoading] = useState(true);
+  const [isChanged, setIsChanged] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, (currentUser) => {
@@ -23,15 +24,22 @@ export default function ListedMovies() {
     });
 
     if (email) dispatch(getUsersLikedMovies(email));
-  }, [email]);
+
+    setTimeout(() => {
+      if (movies?.length) {
+        setLoading(false);
+        setIsChanged(true);
+      }
+    }, 2000);
+  }, [email, movies]);
 
   window.addEventListener('scroll', () => {
     setIsScrolled(window.scrollY === 0 ? false : true);
   });
 
   setTimeout(() => {
-    setLoading(false);
-  }, 6000);
+    if (!isChanged) setLoading(false);
+  }, 2000);
 
   return (
     <Container>
@@ -48,7 +56,7 @@ export default function ListedMovies() {
                 isLiked={true}
               />
             ))
-          ) : <NotAvailable text={'No Liked Movies Found!'} />}
+          ) : <NotAvailable customStyling={{ marginTop: '5rem' }} text={'No Liked Movies Found!'} />}
         </div>
       </div>
     </Container>

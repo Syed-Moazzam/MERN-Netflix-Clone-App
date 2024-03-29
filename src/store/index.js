@@ -7,11 +7,12 @@ import axios from "axios";
 import { API_KEY, TMDB_BASE_URL } from "../utils/constants";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+
 // changes begin 
 const initialState = {
   movies: [],
-  genresLoaded: false,
   genres: [],
+  genresLoaded: false,
 };
 
 export const getGenres = createAsyncThunk("netflix/genres", async () => {
