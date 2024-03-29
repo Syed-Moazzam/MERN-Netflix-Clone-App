@@ -11,10 +11,11 @@ import Loader from "../components/Loader";
 import GenreDropDown from "../components/GenreDropDown";
 
 function Movies() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const movies = useSelector((state) => state.netflix.movies);
   const genres = useSelector((state) => state.netflix.genres);
-  const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
+  const genresLoading = useSelector((state) => state.netflix.genresLoading);
+
+  const [isScrolled, setIsScrolled] = useState(false);
   const [email, setEmail] = useState("");
   const [user, setUser] = useState(undefined);
   const [loading, setLoading] = useState(true);
@@ -22,7 +23,7 @@ function Movies() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (genresLoaded) {
+    if (!genresLoading) {
       dispatch(fetchMovies({ genres, type: "movie" }));
       setTimeout(() => {
         setLoading(false);
@@ -30,13 +31,14 @@ function Movies() {
     }
 
     dispatch(getGenres());
+
     onAuthStateChanged(firebaseAuth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser.uid);
         setEmail(currentUser.email);
       }
     });
-  }, [genresLoaded]);
+  }, [genresLoading]);
 
 
   window.addEventListener('scroll', () => {

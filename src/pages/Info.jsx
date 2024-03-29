@@ -12,34 +12,30 @@ export default function Info() {
   const movie = location?.state?.id;
   var x = movie?.genres;
 
-  const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
-  const [loading, setLoading] = useState(true);
+  const genresLoading = useSelector((state) => state.netflix.genresLoading);
+  const [loading, setLoading] = useState(x ? true : false);
 
   useEffect(() => {
-    if (genresLoaded) setLoading(false);
-  }, [genresLoaded]);
-
-  setTimeout(() => {
-    if (!genresLoaded) setLoading(false);
-  }, 2000);
+    if (!genresLoading) setLoading(false);
+  }, [genresLoading]);
 
   return (
     <Container>
-      {loading ? <Loader style={{ height: '703px' }} /> : !genresLoaded ? <NotAvailable customStyling={{ marginTop: '20rem' }} text={'No Information Available! You Might Not Have Selected A TV Show Or Movie.'} /> :
+      {loading ? <Loader style={{ height: '703px' }} /> : !x ? <NotAvailable customStyling={{ marginTop: '20rem' }} text={'No Information Available! You Might Not Have Selected A TV Show Or Movie.'} /> :
         <div className="player">
           <div className="back">
             <BsArrowLeft onClick={() => navigate(-1)} />
           </div>
           <div className="movie">
-            <img src={`https://image.tmdb.org/t/p/original/${movie.image}`} alt="movie Img" />
+            <img src={`https://image.tmdb.org/t/p/original/${movie?.image}`} alt="movie Img" />
             <div className="name">
-              Name :  {movie.name}
+              Name :  {movie?.name}
 
             </div>
             <div className="others">
               Genres :
               {
-                x.map((r, index) => {
+                x?.map((r, index) => {
                   if (index === x?.length - 1) return <span key={index} className="gen">{r}</span>
                   else return <span key={index} className="gen">{r} ,</span>
                 })

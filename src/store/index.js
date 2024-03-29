@@ -12,7 +12,9 @@ import "react-toastify/dist/ReactToastify.css";
 const initialState = {
   movies: [],
   genres: [],
-  genresLoaded: false,
+  genresLoading: true,
+  genresCategoryLoading: true,
+  likedMoviesLoading: true,
 };
 
 export const getGenres = createAsyncThunk("netflix/genres", async () => {
@@ -112,16 +114,21 @@ const NetflixSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getGenres.fulfilled, (state, action) => {
       state.genres = action.payload;
-      state.genresLoaded = true;
+      state.genresLoading = false;
     });
     builder.addCase(fetchMovies.fulfilled, (state, action) => {
       state.movies = action.payload;
     });
+    builder.addCase(fetchDataByGenre.pending, (state, action) => {
+      state.genresCategoryLoading = true;
+    });
     builder.addCase(fetchDataByGenre.fulfilled, (state, action) => {
       state.movies = action.payload;
+      state.genresCategoryLoading = false;
     });
     builder.addCase(getUsersLikedMovies.fulfilled, (state, action) => {
       state.movies = action.payload;
+      state.likedMoviesLoading = false;
     });
     builder.addCase(removeMovieFromLiked.fulfilled, (state, action) => {
       state.movies = action.payload;

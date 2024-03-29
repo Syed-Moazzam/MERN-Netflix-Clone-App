@@ -14,7 +14,7 @@ import Loader from "../components/Loader";
 function Home() {
   const movies = useSelector((state) => state.netflix.movies);
   const genres = useSelector((state) => state.netflix.genres);
-  const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
+  const genresLoading = useSelector((state) => state.netflix.genresLoading);
 
   const [email, setEmail] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,7 +28,7 @@ function Home() {
   };
 
   useEffect(() => {
-    if (genresLoaded) {
+    if (!genresLoading) {
       dispatch(fetchMovies({ genres, type: "all" }));
       setTimeout(() => {
         setLoading(false);
@@ -40,7 +40,7 @@ function Home() {
     });
 
     dispatch(getGenres());
-  }, [genresLoaded]);
+  }, [genresLoading]);
 
   var data = getMoviesFromRange(0, 100);
   var x = Math.floor(Math.random() * data?.length);

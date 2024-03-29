@@ -12,11 +12,11 @@ import Loader from "../components/Loader";
 
 export default function ListedMovies() {
   const movies = useSelector((state) => state.netflix.movies);
+  const likedMoviesLoading = useSelector((state) => state.netflix.likedMoviesLoading);
   const dispatch = useDispatch();
   const [isScrolled, setIsScrolled] = useState(false);
   const [email, setEmail] = useState(undefined);
   const [loading, setLoading] = useState(true);
-  const [isChanged, setIsChanged] = useState(false);
 
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, (currentUser) => {
@@ -25,21 +25,16 @@ export default function ListedMovies() {
 
     if (email) dispatch(getUsersLikedMovies(email));
 
-    setTimeout(() => {
-      if (movies?.length) {
+    if (!likedMoviesLoading) {
+      setTimeout(() => {
         setLoading(false);
-        setIsChanged(true);
-      }
-    }, 2000);
-  }, [email, movies]);
+      }, 2000);
+    }
+  }, [email, likedMoviesLoading]);
 
   window.addEventListener('scroll', () => {
     setIsScrolled(window.scrollY === 0 ? false : true);
   });
-
-  setTimeout(() => {
-    if (!isChanged) setLoading(false);
-  }, 2000);
 
   return (
     <Container>
