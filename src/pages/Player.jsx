@@ -16,7 +16,7 @@ export default function Player() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`https://api.themoviedb.org/3/movie/${location.state?.id?.id}?api_key=6d75b2a2e2b05ca51b4dda2ad6426fda&append_to_response=videos`)
+    axios.get(`${process.env.REACT_APP_TMDB_BASE_URL}/movie/${location.state?.id?.id}?api_key=6d75b2a2e2b05ca51b4dda2ad6426fda&append_to_response=videos`)
       .then(response => {
         const x = response.data.videos.results.find(vid => vid.name === "Official Trailer")
         setTrailer(x?.key);
@@ -64,7 +64,7 @@ const Container = styled.div`
     height: 100vh;
     .back {
       position: absolute;
-      padding: 2rem;
+      padding: 1.5rem 2rem;
       z-index: 1;
       svg {
         font-size: 3rem;

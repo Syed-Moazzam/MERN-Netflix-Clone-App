@@ -1,14 +1,13 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from 'firebase/auth'
+import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCF5S9lEaiV8Cdr_q_M4xwSeDYYFv4oTJM",
-  authDomain: "netflix-clone-app-mern.firebaseapp.com",
-  projectId: "netflix-clone-app-mern",
-  storageBucket: "netflix-clone-app-mern.appspot.com",
-  messagingSenderId: "1087919380286",
-  appId: "1:1087919380286:web:87663fb02c36174321fe6f"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: "netflix-clone-app-5e92c.firebaseapp.com",
+  projectId: "netflix-clone-app-5e92c",
+  storageBucket: "netflix-clone-app-5e92c.appspot.com",
+  messagingSenderId: "174559455727",
+  appId: "1:174559455727:web:29e9e15d34ec51c599ee1a"
 };
 
 // Initialize Firebase

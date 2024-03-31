@@ -61,7 +61,7 @@ const Container = styled.div`
     height: 100vh;
     .back {
       position: absolute;
-      padding: 2rem;
+      padding: 1.5rem 2rem;
       z-index: 1;
       svg {
         font-size: 2.5rem;
