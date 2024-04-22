@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Navbar from "../components/Navbar";
+import AfterLoginHeader from "../components/AfterLoginHeader";
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
 import { useSelector, useDispatch } from "react-redux";
@@ -48,11 +48,11 @@ function Movies() {
   return (
     <Container>
       <div className="navbar">
-        <Navbar style={{ backgroundColor: isScrolled && 'black' }} email={email} />
+        <AfterLoginHeader style={{ backgroundColor: isScrolled && 'black' }} email={email} />
       </div>
       <div className="data">
         <GenreDropDown genres={genres} type="movie" setLoading={setLoading} />
-        {loading ? <Loader style={{ marginTop: '6rem' }} /> : movies?.length ? <Slider movies={movies} /> : <NotAvailable customStyling={{ marginTop: '5rem' }} text={'No Movies Available For The Selected Genre! Please Select A Different Genre.'} />}
+        {loading ? <Loader style={{ height: '60vh' }} /> : movies?.length ? <Slider movies={movies} /> : <NotAvailable customStyling={{ height: '50vh' }} text={'No Movies Available For The Selected Genre! Please Select A Different Genre.'} navigateBack={false} />}
       </div>
     </Container>
   );

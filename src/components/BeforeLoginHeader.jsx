@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 
-export default function Header(props) {
+export default function BeforeLoginHeader(props) {
   const navigate = useNavigate();
 
   return (
@@ -17,6 +17,7 @@ export default function Header(props) {
       >
         {props.login ? "Log In" : "Sign Up"}
       </button>
+
       <style>{`
         @media (max-width: 768px) {
           header {

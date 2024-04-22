@@ -32,7 +32,7 @@ export default function Player() {
 
   return (
     <Container>
-      {loading ? <Loader style={{ height: '703px' }} /> : !isMoviePlayed ? <NotAvailable customStyling={{ marginTop: '20rem' }} text={'No Movie Found! You Might Not Have Selected A TV Show Or Movie To Be Played.'} /> :
+      {loading ? <Loader style={{ height: '100vh' }} /> : !isMoviePlayed ? <NotAvailable customStyling={{ height: '100vh' }} text={'No Movie Found! You Might Not Have Selected A TV Show Or Movie To Be Played.'} navigateBack={true} /> :
         <div className="player">
           <div className="back">
             <BsArrowLeft onClick={() => navigate(-1)} />

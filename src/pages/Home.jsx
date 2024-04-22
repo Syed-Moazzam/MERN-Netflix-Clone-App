@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Navbar from "../components/Navbar";
+import AfterLoginHeader from "../components/AfterLoginHeader";
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
 import { useNavigate } from "react-router-dom";
@@ -64,9 +64,9 @@ function Home() {
 
   return (
     <Container>
-      {loading ? <Loader style={{ height: '703px' }} /> :
+      {loading ? <Loader style={{ height: '100vh' }} /> :
         <>
-          <Navbar style={{ backgroundColor: isScrolled && 'black' }} email={email} />
+          <AfterLoginHeader style={{ backgroundColor: isScrolled && 'black' }} email={email} />
           <div className="hero">
             <img
               src={`https://image.tmdb.org/t/p/original/${mv.image}`}

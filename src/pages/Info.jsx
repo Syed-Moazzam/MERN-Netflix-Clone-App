@@ -21,7 +21,7 @@ export default function Info() {
 
   return (
     <Container>
-      {loading ? <Loader style={{ height: '703px' }} /> : !x ? <NotAvailable customStyling={{ marginTop: '20rem' }} text={'No Information Available! You Might Not Have Selected A TV Show Or Movie.'} /> :
+      {loading ? <Loader style={{ height: '100vh' }} /> : !x ? <NotAvailable customStyling={{ height: '100vh' }} text={'No Information Available! You Might Not Have Selected A TV Show Or Movie.'} navigateBack={true} /> :
         <div className="player">
           <div className="back">
             <BsArrowLeft onClick={() => navigate(-1)} />

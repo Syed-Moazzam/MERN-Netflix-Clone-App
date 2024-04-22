@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { firebaseAuth } from "../utils/firebase-config";
 import Card from "../components/Card";
 import styled from "styled-components";
-import Navbar from "../components/Navbar";
+import AfterLoginHeader from "../components/AfterLoginHeader";
 import { getUsersLikedMovies } from "../store";
 import { useDispatch, useSelector } from "react-redux";
 import NotAvailable from "../components/NotAvailable";
@@ -38,11 +38,11 @@ export default function ListedMovies() {
 
   return (
     <Container>
-      <Navbar style={{ backgroundColor: isScrolled && 'black' }} email={email} />
+      <AfterLoginHeader style={{ backgroundColor: isScrolled && 'black' }} email={email} />
       <div className="content flex column">
         <h1>My List</h1>
         <div className="grid flex">
-          {loading ? <Loader style={{ marginTop: '3.5rem' }} /> : movies?.length > 0 ? (
+          {loading ? <Loader style={{ height: '60vh' }} /> : movies?.length > 0 ? (
             movies?.map((movie, index) => (
               <Card
                 movieData={movie}
@@ -51,7 +51,7 @@ export default function ListedMovies() {
                 isLiked={true}
               />
             ))
-          ) : <NotAvailable customStyling={{ marginTop: '5rem' }} text={'No Liked Movies Found!'} />}
+          ) : <NotAvailable customStyling={{ height: '50vh' }} text={'No Liked Movies Found!'} navigateBack={false} />}
         </div>
       </div>
     </Container>

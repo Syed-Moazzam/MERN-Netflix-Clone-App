@@ -7,10 +7,11 @@ import { firebaseAuth } from "../utils/firebase-config";
 import { FaPowerOff, FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
 
-export default function Navbar({ style, email }) {
+export default function AfterLoginHeader({ style, email }) {
   const navigate = useNavigate();
   const [showSearch, setShowSearch] = useState(false);
   const [inputHover, setInputHover] = useState(false);
+
   const links = [
     { name: "Home", link: "/" },
     { name: "TV Shows", link: "/tv-shows" },

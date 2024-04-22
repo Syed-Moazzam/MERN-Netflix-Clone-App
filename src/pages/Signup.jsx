@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
-import Header from "../components/Header";
+import BeforeLoginHeader from "../components/BeforeLoginHeader";
 import Footer from "../components/Footer";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -50,7 +50,7 @@ export default function Signup() {
     <>
       <div className="content relative z-10 w-screen" style={{ height: '703px' }}>
         <img className="h-full w-full absolute top-0 left-0 opacity-50" src={background} alt="background" style={{ zIndex: '-1' }} />
-        <Header login={"login"} />
+        <BeforeLoginHeader login={"login"} />
         <div className="body flex flex-col items-center justify-center" style={{ height: `${703 - 80}px` }}>
           <div className="text text-center">
             <h1 className="text-4xl font-extrabold mb-4 text-white">
