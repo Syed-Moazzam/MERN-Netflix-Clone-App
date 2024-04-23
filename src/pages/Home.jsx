@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import AfterLoginHeader from "../components/AfterLoginHeader";
+import DesktopHeader from "../components/DesktopHeader";
+import MobileHeader from "../components/MobileHeader";
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +11,7 @@ import { FaPlay } from "react-icons/fa";
 import { AiOutlineInfoCircle } from "react-icons/ai";
 import Slider from "../components/Slider";
 import Loader from "../components/Loader";
+import useMobileHeader from '../utils/check-screen-width';
 
 function Home() {
   const movies = useSelector((state) => state.netflix.movies);
@@ -19,6 +21,7 @@ function Home() {
   const [email, setEmail] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
   const [loading, setLoading] = useState(true);
+  const showMobileHeader = useMobileHeader();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -66,7 +69,7 @@ function Home() {
     <Container>
       {loading ? <Loader style={{ height: '100vh' }} /> :
         <>
-          <AfterLoginHeader style={{ backgroundColor: isScrolled && 'black' }} email={email} />
+          {showMobileHeader ? <MobileHeader /> : <DesktopHeader style={{ backgroundColor: isScrolled && 'black' }} email={email} />}
           <div className="hero">
             <img
               src={`https://image.tmdb.org/t/p/original/${mv.image}`}

@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
-import BeforeLoginHeader from "../components/BeforeLoginHeader";
 import Footer from '../components/Footer';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import background from "../assets/bg.jpg";
+import DesktopHeader from "../components/DesktopHeader";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -28,7 +28,7 @@ function Login() {
   return (
     <div className="relative w-screen z-10" style={{ height: '703px' }}>
       <img className="absolute top-0 left-0 w-full h-full opacity-50" src={background} alt="background" style={{ zIndex: '-1' }} />
-      <BeforeLoginHeader />
+      <DesktopHeader />
       <div className="flex flex-col items-center justify-center h-full px-4 md:px-0" style={{ height: `${703 - 80}px` }}>
         <div className="bg-black bg-opacity-70 w-full rounded-lg" style={{ padding: '3rem', maxWidth: '28rem' }}>
           <div className="text-white text-2xl font-bold mb-6">Sign In</div>

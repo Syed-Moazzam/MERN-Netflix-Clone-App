@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import AfterLoginHeader from "../components/AfterLoginHeader";
+import DesktopHeader from "../components/DesktopHeader";
 import { onAuthStateChanged } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,6 +9,8 @@ import Slider from "../components/Slider";
 import NotAvailable from "../components/NotAvailable";
 import Loader from "../components/Loader";
 import GenreDropDown from "../components/GenreDropDown";
+import useMobileHeader from "../utils/check-screen-width";
+import MobileHeader from "../components/MobileHeader";
 
 function TVShows() {
   const movies = useSelector((state) => state.netflix.movies);
@@ -19,6 +21,7 @@ function TVShows() {
   const [email, setEmail] = useState("");
   const [user, setUser] = useState(undefined);
   const [loading, setLoading] = useState(true);
+  const showMobileHeader = useMobileHeader();
 
   const dispatch = useDispatch();
 
@@ -46,7 +49,7 @@ function TVShows() {
 
   return (
     <Container>
-      <AfterLoginHeader style={{ backgroundColor: isScrolled && 'black' }} email={email} />
+      {showMobileHeader ? <MobileHeader /> : <DesktopHeader style={{ backgroundColor: isScrolled && 'black' }} email={email} />}
       <div className="data">
         <GenreDropDown genres={genres} type="tv" setLoading={setLoading} />
         {loading ? <Loader style={{ height: '60vh' }} /> : movies?.length ?

@@ -7,7 +7,7 @@ import { firebaseAuth } from "../utils/firebase-config";
 import { FaPowerOff, FaSearch } from "react-icons/fa";
 import { toast } from "react-toastify";
 
-export default function AfterLoginHeader({ style, email }) {
+export default function DesktopHeader({ style, email, showLoginBtn }) {
   const navigate = useNavigate();
   const [showSearch, setShowSearch] = useState(false);
   const [inputHover, setInputHover] = useState(false);
@@ -26,62 +26,108 @@ export default function AfterLoginHeader({ style, email }) {
     navigate('/login');
   }
 
-  return (
-    <Container>
-      <nav className={`flex`} style={{ ...style }}>
-        <div className="left flex a-center">
-          <div className="brand flex a-center j-center">
-            <img src={logo} alt="Logo" />
-          </div>
-          <ul className="links flex">
-            {links.map(({ name, link }) => {
-              return (
-                <li key={name}>
-                  <Link to={link}>{name}</Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <div className="right flex a-center">
-          <span>{email}</span>
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
 
-          <div className={`search ${showSearch ? "show-search" : ""}`}>
-            <button
-              onFocus={() => setShowSearch(true)}
-              onBlur={() => {
-                if (!inputHover) {
+  if (isLoggedIn) {
+    return (
+      <Container>
+        <nav className={`flex`} style={{ ...style }}>
+          <div className="left flex a-center">
+            <div className="brand flex a-center j-center">
+              <img src={logo} alt="Logo" />
+            </div>
+            <ul className="links flex">
+              {links.map(({ name, link }) => {
+                return (
+                  <li key={name}>
+                    <Link to={link}>{name}</Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+          <div className="right flex a-center">
+            <span>{email}</span>
+
+            <div className={`search ${showSearch ? "show-search" : ""}`}>
+              <button
+                onFocus={() => setShowSearch(true)}
+                onBlur={() => {
+                  if (!inputHover) {
+                    setShowSearch(false);
+                  }
+                }}
+              >
+                <FaSearch />
+              </button>
+              <input
+                type="text"
+                placeholder="Search"
+                onMouseEnter={() => setInputHover(true)}
+                onMouseLeave={() => setInputHover(false)}
+                onBlur={() => {
                   setShowSearch(false);
-                }
-              }}
-            >
-              <FaSearch />
-            </button>
-            <input
-              type="text"
-              placeholder="Search"
-              onMouseEnter={() => setInputHover(true)}
-              onMouseLeave={() => setInputHover(false)}
-              onBlur={() => {
-                setShowSearch(false);
-                setInputHover(false);
-              }}
-            />
-          </div>
+                  setInputHover(false);
+                }}
+              />
+            </div>
 
-          <button onClick={handleUserSignOut}>
-            <FaPowerOff />
-          </button>
+            <button onClick={handleUserSignOut}>
+              <FaPowerOff />
+            </button>
+          </div>
+        </nav>
+      </Container>
+    );
+  }
+  else {
+    return (
+      <header className="flex items-center justify-between px-4 md:px-8 py-2">
+        <div className="logo">
+          <img className="h-16" src={logo} alt="logo" />
         </div>
-      </nav>
-    </Container>
-  );
+        <button
+          onClick={() => navigate(showLoginBtn ? "/login" : "/sign-up")}
+          className={'px-4 py-2 rounded text-white font-bold text-md'}
+          style={{ backgroundColor: 'rgb(229, 9, 20)' }}
+        >
+          {showLoginBtn ? "Log In" : "Sign Up"}
+        </button>
+
+        <style>{`
+        @media (max-width: 768px) {
+          header {
+            padding: 1rem;
+          }
+          .logo img {
+            height: 4rem;
+          }
+          button {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          header {
+            padding: 0.5rem;
+          }
+          .logo img {
+            height: 3rem;
+          }
+          button {
+            padding: 0.5rem;
+            font-size: 0.8rem;
+          }
+        }
+      `}</style>
+      </header>
+    )
+  }
 }
 
 const Container = styled.div`
   nav {
-    position: sticky;
-    top: 0;
     height: 6.5rem;
     width: 100%;
     justify-content: space-between;

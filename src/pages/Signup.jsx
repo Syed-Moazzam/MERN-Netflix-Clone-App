@@ -2,11 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { firebaseAuth } from "../utils/firebase-config";
-import BeforeLoginHeader from "../components/BeforeLoginHeader";
 import Footer from "../components/Footer";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import DesktopHeader from "../components/DesktopHeader";
 import background from "../assets/bg.jpg";
 import promotion1 from "../assets/promotion1.jpg";
 import promotion2 from "../assets/promotion2.jpg";
@@ -14,7 +13,6 @@ import promotion3 from "../assets/promotion3.jpg";
 import promotion4 from "../assets/promotion4.jpg";
 
 import {
-  Center,
   Container,
   Heading,
   Image,
@@ -36,7 +34,7 @@ export default function Signup() {
 
   const handleSignUp = async () => {
     try {
-      const response = await createUserWithEmailAndPassword(firebaseAuth, email, password);
+      await createUserWithEmailAndPassword(firebaseAuth, email, password);
       localStorage.setItem('isLoggedIn', true);
       toast.success("Signup successful! Welcome aboard!");
       navigate('/');
@@ -50,7 +48,7 @@ export default function Signup() {
     <>
       <div className="content relative z-10 w-screen" style={{ height: '703px' }}>
         <img className="h-full w-full absolute top-0 left-0 opacity-50" src={background} alt="background" style={{ zIndex: '-1' }} />
-        <BeforeLoginHeader login={"login"} />
+        <DesktopHeader showLoginBtn={true} />
         <div className="body flex flex-col items-center justify-center" style={{ height: `${703 - 80}px` }}>
           <div className="text text-center">
             <h1 className="text-4xl font-extrabold mb-4 text-white">

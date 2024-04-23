@@ -4,11 +4,13 @@ import React, { useEffect, useState } from "react";
 import { firebaseAuth } from "../utils/firebase-config";
 import Card from "../components/Card";
 import styled from "styled-components";
-import AfterLoginHeader from "../components/AfterLoginHeader";
+import DesktopHeader from "../components/DesktopHeader";
 import { getUsersLikedMovies } from "../store";
 import { useDispatch, useSelector } from "react-redux";
 import NotAvailable from "../components/NotAvailable";
 import Loader from "../components/Loader";
+import useMobileHeader from "../utils/check-screen-width";
+import MobileHeader from "../components/MobileHeader";
 
 export default function ListedMovies() {
   const movies = useSelector((state) => state.netflix.movies);
@@ -17,6 +19,7 @@ export default function ListedMovies() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [email, setEmail] = useState(undefined);
   const [loading, setLoading] = useState(true);
+  const showMobileHeader = useMobileHeader();
 
   useEffect(() => {
     onAuthStateChanged(firebaseAuth, (currentUser) => {
@@ -38,7 +41,7 @@ export default function ListedMovies() {
 
   return (
     <Container>
-      <AfterLoginHeader style={{ backgroundColor: isScrolled && 'black' }} email={email} />
+      {showMobileHeader ? <MobileHeader /> : <DesktopHeader style={{ backgroundColor: isScrolled && 'black' }} email={email} />}
       <div className="content flex column">
         <h1>My List</h1>
         <div className="grid flex">
