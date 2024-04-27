@@ -30,7 +30,7 @@ function Login() {
       <img className="absolute top-0 left-0 w-full h-full opacity-50" src={background} alt="background" style={{ zIndex: '-1' }} />
       <DesktopHeader />
       <div className="flex flex-col items-center justify-center h-full px-4 md:px-0" style={{ height: `${703 - 80}px` }}>
-        <div className="bg-black bg-opacity-70 w-full rounded-lg" style={{ padding: '3rem', maxWidth: '28rem' }}>
+        <div className="bg-black bg-opacity-70 w-full rounded-lg p-10 md:p-12 max-w-md">
           <div className="text-white text-2xl font-bold mb-6">Sign In</div>
           <div className="flex flex-col" style={{ gap: '1.5rem' }}>
             <input

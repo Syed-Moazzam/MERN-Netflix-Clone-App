@@ -88,7 +88,7 @@ export default function DesktopHeader({ style, email, showLoginBtn }) {
         </div>
         <button
           onClick={() => navigate(showLoginBtn ? "/login" : "/sign-up")}
-          className={'px-4 py-2 rounded text-white font-bold text-md'}
+          className={'px-4 py-2 rounded text-white font-bold'}
           style={{ backgroundColor: 'rgb(229, 9, 20)' }}
         >
           {showLoginBtn ? "Log In" : "Sign Up"}
@@ -113,11 +113,11 @@ export default function DesktopHeader({ style, email, showLoginBtn }) {
             padding: 0.5rem;
           }
           .logo img {
-            height: 3rem;
+            height: 3.5rem;
           }
           button {
             padding: 0.5rem;
-            font-size: 0.8rem;
+            font-size: 0.9rem;
           }
         }
       `}</style>

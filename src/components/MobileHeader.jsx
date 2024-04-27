@@ -56,6 +56,7 @@ const StyledMobileHeader = styled.header`
   position: fixed;
   top: 0;
   z-index: 10;
+  transition: background-color 0.8s cubic-bezier(0.23, 1, 0.32, 1);
   background-color: transparent;
   width: 100%;
   padding: 10px 12px 14px;
@@ -91,6 +92,18 @@ const StyledMobileHeader = styled.header`
     align-items: flex-start;
     .menuToggleBtn {
       display: block;
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    .nav_logo {
+      .logo {
+        height: 3.5rem;
+      }
+    }
+
+    .logoutBtn, .menuToggleBtn {
+      top: 28px;
     }
   }
 `;

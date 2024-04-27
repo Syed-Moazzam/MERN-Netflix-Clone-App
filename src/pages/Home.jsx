@@ -72,7 +72,7 @@ function Home() {
           {showMobileHeader ? <MobileHeader /> : <DesktopHeader style={{ backgroundColor: isScrolled && 'black' }} email={email} />}
           <div className="hero">
             <img
-              src={`https://image.tmdb.org/t/p/original/${mv.image}`}
+              src={`https://image.tmdb.org/t/p/original/${mv?.image}`}
               alt="background"
               className="background-image"
             />
@@ -112,6 +112,7 @@ const Container = styled.div`
     align-items: center;
     width: 100%;
     height: 703px;
+    margin-bottom: 10px;
 
     .background-image {
       filter: brightness(60%);
@@ -122,8 +123,8 @@ const Container = styled.div`
       left: 0rem;
     }
     img {
-      height: 100%;
       width: 100vw;
+      height: 100%;
     }
     .container {
       position: relative;
@@ -163,7 +164,43 @@ const Container = styled.div`
         }
       }
     }
-  }
+
+    @media screen and (max-width: 768px) {
+      .container {
+        .logo {
+            font-size: 3.4rem;
+        }
+      }
+    }
+
+    @media screen and (max-width: 576px) {
+      .container {
+        .logo {
+            font-size: 3rem;
+        }
+
+        .buttons {
+          margin: 4rem 2rem 4rem 3.6rem;
+          gap: 1.5rem;
+          button {
+            font-size: 1.2rem;
+            gap: 1rem;
+            padding: 0.8rem 1.5rem;
+          }
+        }
+      }
+    }
+
+    @media screen and (max-width: 420px) {
+      .buttons {
+          gap: 1rem !important;
+          button {
+            font-size: 1rem !important;
+            gap: 1rem !important;
+            padding: 0.8rem 1.3rem !important;
+          }
+        }
+    }
 `;
 
 export default Home;
