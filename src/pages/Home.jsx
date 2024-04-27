@@ -122,24 +122,26 @@ const Container = styled.div`
       top: 0rem;
       left: 0rem;
     }
+
     img {
       width: 100vw;
       height: 100%;
     }
+
     .container {
       position: relative;
       z-index: 5;
-      margin-top: 6rem;
+      margin: 2rem 0rem 0rem 5rem;
 
       .logo {
-          width: 50%;
-          height: 100%;
-          margin-left: 5rem;
-          font-size: 4rem;
-          font-weight: bold;
+        width: 75%;
+        height: 100%;
+        font-size: 4rem;
+        font-weight: bold;
       }
+
       .buttons {
-        margin: 4.5rem 5rem;
+        margin: 4rem 0rem 0rem;
         gap: 2rem;
         button {
           font-size: 1.4rem;
@@ -154,6 +156,7 @@ const Container = styled.div`
           &:hover {
             opacity: 0.8;
           }
+
           &:nth-of-type(2) {
             background-color: rgba(109, 109, 110, 0.7);
             color: white;
@@ -180,7 +183,8 @@ const Container = styled.div`
         }
 
         .buttons {
-          margin: 4rem 2rem 4rem 3.6rem;
+          margin-right: 2rem;
+          margin-bottom: 1rem;
           gap: 1.5rem;
           button {
             font-size: 1.2rem;
@@ -191,15 +195,23 @@ const Container = styled.div`
       }
     }
 
-    @media screen and (max-width: 420px) {
+    @media screen and (max-width: 430px) {
+      .container {
+        margin-left: 4.2rem;
+        .logo {
+            font-size: 2.8rem;
+        }
+
       .buttons {
+        margin-top: 3.8rem;
           gap: 1rem !important;
           button {
             font-size: 1rem !important;
             gap: 1rem !important;
-            padding: 0.8rem 1.3rem !important;
+            padding: 0.8rem 1.2rem !important;
           }
         }
+      }
     }
 `;
 

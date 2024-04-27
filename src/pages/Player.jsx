@@ -34,7 +34,7 @@ export default function Player() {
     <Container>
       {loading ? <Loader style={{ height: '100vh' }} /> : !isMoviePlayed ? <NotAvailable customStyling={{ height: '100vh' }} text={'No Movie Found! You Might Not Have Selected A TV Show Or Movie To Be Played.'} navigateBack={true} /> :
         <div className="player">
-          <div className="back">
+          <div className="back-btn-player">
             <BsArrowLeft onClick={() => navigate(-1)} />
           </div>
           <YouTube videoId={trailer} className="video" opts={
@@ -62,12 +62,15 @@ const Container = styled.div`
   .player {
     width: 100vw;
     height: 100vh;
-    .back {
-      position: absolute;
-      padding: 2rem;
-      z-index: 1;
+    margin: 5.6rem auto 3rem;
+    position: relative;
+    .back-btn-player {
+      position: fixed;
+      left: 32px;
+      top: 35px;
+      z-index: 5;
       svg {
-        font-size: 3rem;
+        font-size: 2.3rem;
         cursor: pointer;
       }
     }

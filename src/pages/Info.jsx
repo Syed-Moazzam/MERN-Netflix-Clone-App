@@ -3,27 +3,24 @@ import styled from "styled-components";
 import { BsArrowLeft } from "react-icons/bs";
 import { useNavigate, useLocation } from "react-router-dom";
 import Loader from '../components/Loader';
-import { useSelector } from "react-redux";
 import NotAvailable from "../components/NotAvailable";
 
 export default function Info() {
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
   const movie = location?.state?.id;
-  var x = movie?.genres;
+  const movieGenres = movie?.genres;
 
-  const genresLoading = useSelector((state) => state.netflix.genresLoading);
-  const [loading, setLoading] = useState(x ? true : false);
-
-  useEffect(() => {
-    if (!genresLoading) setLoading(false);
-  }, [genresLoading]);
+  setTimeout(() => {
+    setLoading(false);
+  }, 2000);
 
   return (
     <Container>
-      {loading ? <Loader style={{ height: '100vh' }} /> : !x ? <NotAvailable customStyling={{ height: '100vh' }} text={'No Information Available! You Might Not Have Selected A TV Show Or Movie.'} navigateBack={true} /> :
+      {loading ? <Loader style={{ height: '100vh' }} /> : !movieGenres ? <NotAvailable customStyling={{ height: '100vh' }} text={'No Information Available! You Might Not Have Selected A TV Show Or Movie.'} navigateBack={true} /> :
         <div className="player">
-          <div className="back">
+          <div className="back-btn-info">
             <BsArrowLeft onClick={() => navigate(-1)} />
           </div>
           <div className="movie">
@@ -35,8 +32,8 @@ export default function Info() {
             <div className="others">
               Genres :
               {
-                x?.map((r, index) => {
-                  if (index === x?.length - 1) return <span key={index} className="gen">{r}</span>
+                movieGenres?.map((r, index) => {
+                  if (index === movieGenres?.length - 1) return <span key={index} className="gen">{r}</span>
                   else return <span key={index} className="gen">{r} ,</span>
                 })
               }
@@ -49,22 +46,18 @@ export default function Info() {
 }
 
 const Container = styled.div`
-  .no-data-available-heading-info-page {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 20px;
-  }
   .player {
     width: 100vw;
-    height: 100vh;
-    .back {
-      position: absolute;
-      padding: 1.5rem 2rem;
-      z-index: 1;
+    height: 100%;
+    position: relative;
+    padding: 6rem 3rem 4rem;
+    .back-btn-info {
+      position: fixed;
+      left: 32px;
+      top: 35px;
+      z-index: 5;
       svg {
-        font-size: 2.5rem;
+        font-size: 2.3rem;
         cursor: pointer;
       }
     }
@@ -74,25 +67,40 @@ const Container = styled.div`
       text-align: center;
       color: white;
       img{
-        height: 425px;
-        width: 60%;
-        margin: 3.5rem auto 2rem;
+        height: 380px;
+        width: 100%;
+        margin: 0rem auto 2rem;
       }
       .name{
-        font-size: 4rem;
-        font-weight: bold;
-      }
-      .others{
         font-size: 3rem;
         font-weight: bold;
-      width: 100%;
-      text-align: center;
-      .gen{
-        margin-left: 20px;
       }
+      .others {
+        font-size: 2rem;
+        font-weight: bold;
+        width: 100%;
+        text-align: center;
+        .gen {
+          margin-left: 20px;
+        }
       }
-
     }
+  }
 
+  @media screen and (min-width: 992px) {
+    .player {
+      .movie {
+        img{
+          width: 80%;
+          height: 500px;
+        }
+        .name{
+          font-size: 3.5rem;
+        }
+        .others {
+          font-size: 2.5rem;
+        }
+      }
+    }
   }
 `;
