@@ -42,7 +42,7 @@ export default function GenreDropDown({ genres, type, setLoading }) {
 }
 
 const Select = styled.select`
-  margin-left: 5rem;
+  margin: 0px 0px 12px 50px;
   cursor: pointer;
   outline: none;
   font-size: 1.1rem;
