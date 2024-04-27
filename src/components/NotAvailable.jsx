@@ -18,7 +18,7 @@ export default function NotAvailable({ customStyling, text, navigateBack }) {
               top: 34px;
               z-index: 5;
               svg {
-                font-size: 3rem;
+                font-size: 2.3rem;
                 cursor: pointer;
               }
           }
