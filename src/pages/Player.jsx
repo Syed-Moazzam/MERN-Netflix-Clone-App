@@ -62,7 +62,7 @@ const Container = styled.div`
   .player {
     width: 100vw;
     height: 100vh;
-    margin: 5.5rem auto 3rem;
+    margin: 5.5rem auto 3.5rem;
     position: relative;
     .back-btn-player {
       position: fixed;
