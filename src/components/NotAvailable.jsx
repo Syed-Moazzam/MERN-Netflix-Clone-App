@@ -14,8 +14,8 @@ export default function NotAvailable({ customStyling, text, navigateBack }) {
         {`
           .back-btn-not-available {
               position: fixed;
-              left: 32px;
-              top: 35px;
+              left: 28px;
+              top: 34px;
               z-index: 5;
               svg {
                 font-size: 2.3rem;

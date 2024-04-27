@@ -53,8 +53,8 @@ const Container = styled.div`
     padding: 6rem 3rem 4rem;
     .back-btn-info {
       position: fixed;
-      left: 32px;
-      top: 35px;
+      left: 28px;
+      top: 34px;
       z-index: 5;
       svg {
         font-size: 2.3rem;
@@ -67,7 +67,7 @@ const Container = styled.div`
       text-align: center;
       color: white;
       img{
-        height: 380px;
+        height: 350px;
         width: 100%;
         margin: 0rem auto 2rem;
       }

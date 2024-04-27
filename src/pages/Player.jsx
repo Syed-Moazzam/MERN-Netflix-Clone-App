@@ -62,12 +62,12 @@ const Container = styled.div`
   .player {
     width: 100vw;
     height: 100vh;
-    margin: 5.6rem auto 3rem;
+    margin: 5.5rem auto 3rem;
     position: relative;
     .back-btn-player {
       position: fixed;
-      left: 32px;
-      top: 35px;
+      left: 28px;
+      top: 34px;
       z-index: 5;
       svg {
         font-size: 2.3rem;
