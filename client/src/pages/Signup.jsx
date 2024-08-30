@@ -36,11 +36,11 @@ export default function Signup() {
     try {
       await createUserWithEmailAndPassword(firebaseAuth, email, password);
       localStorage.setItem('isLoggedIn', true);
-      toast.success("Signup successful! Welcome aboard!");
+      toast.success("Signup Successful!");
       navigate('/');
     } catch (error) {
       console.log(error);
-      toast.error("Signup failed. Please try again.");
+      toast.error("Signup Failed. Please Try Again.");
     }
   };
 

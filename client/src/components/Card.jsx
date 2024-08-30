@@ -31,21 +31,25 @@ export default React.memo(function Card({ movieData, isLiked = false }) {
   const addToList = async () => {
     try {
       if (!email || !movieData) {
-        // Add proper validation for email and movieData
         throw new Error("Invalid request parameters");
       }
 
-      await axios.post("https://helpful-red-jackrabbit.cyclic.app/api/user/add", {
-        email,
-        data: movieData,
+      const { id, genres, name, image } = movieData;
+      const imageUrl = `https://image.tmdb.org/t/p/w500${image}`;
+      const response = await axios.post("/api/add-movie-to-liked-list", {
+        userEmail: email,
+        movieId: id,
+        movieName: name,
+        genres,
+        image: imageUrl
       });
 
-      toast.success(`${movieData.name} added to the liked list.`);
+      if (response.data.status === 'success') {
+        toast.success(response.data.message);
+      }
     } catch (error) {
-      console.error(error);
-      // Handle error, show appropriate message to the user
-      toast.error(`Error adding movie to the liked list: ${error.response.data.error || 'Unknown error'}`);
-
+      console.error('error', error.message);
+      toast.error(error.message);
     }
   };
 
@@ -85,9 +89,7 @@ export default React.memo(function Card({ movieData, isLiked = false }) {
                   <BsCheck
                     title="Remove from List"
                     onClick={() =>
-                      dispatch(
-                        removeMovieFromLiked({ movieId: movieData.id, movieName: movieData.name, email })
-                      )
+                      dispatch(removeMovieFromLiked({ objectId: movieData._id, email }))
                     }
                   />
                 ) : (

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { onAuthStateChanged } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { firebaseAuth } from "../utils/firebase-config";
@@ -49,9 +48,8 @@ export default function ListedMovies() {
             movies?.map((movie, index) => (
               <Card
                 movieData={movie}
-                index={index}
-                key={movie.id}
                 isLiked={true}
+                key={index}
               />
             ))
           ) : <NotAvailable customStyling={{ height: '50vh' }} text={'No Liked Movies Found!'} navigateBack={false} />}

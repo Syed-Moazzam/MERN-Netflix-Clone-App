@@ -83,27 +83,27 @@ export const fetchMovies = createAsyncThunk(
 export const getUsersLikedMovies = createAsyncThunk(
   "netflix/getLiked",
   async (email) => {
-    const {
-      data: { movies },
-    } = await axios.get(`https://helpful-red-jackrabbit.cyclic.app/api/user/liked/${email}`);
-    if (movies)
+    const response = await axios.get(`/api/get-liked-movies-list/${email}`);
+
+    if (response.data.status === 'success') {
+      const movies = response.data.data;
       return movies;
-    else
+    }
+    else {
       return null;
+    }
   }
 );
 
 export const removeMovieFromLiked = createAsyncThunk(
   "netflix/deleteLiked",
-  async ({ movieId, movieName, email }) => {
-    const {
-      data: { movies },
-    } = await axios.put("https://helpful-red-jackrabbit.cyclic.app/api/user/remove", {
-      email,
-      movieId,
-    });
-    toast.success(`${movieName} removed from the liked list.`);
-    return movies;
+  async ({ objectId, email }) => {
+    const response = await axios.delete(`/api/delete-movie-from-liked-list/${objectId}/${email}`);
+    if (response.data.status === 'success') {
+      const movies = response.data.data;
+      toast.success('Movie Removed Successfully From The Liked List.');
+      return movies;
+    }
   }
 );
 

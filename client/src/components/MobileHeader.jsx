@@ -18,7 +18,7 @@ const MobileHeader = () => {
   const handleUserSignOut = () => {
     localStorage.removeItem('isLoggedIn');
     signOut(firebaseAuth);
-    toast.success('Signed out successfully!');
+    toast.success('Signed Out Successfully!');
     navigate('/login');
   }
 

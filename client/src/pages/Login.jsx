@@ -17,11 +17,11 @@ function Login() {
     try {
       await signInWithEmailAndPassword(firebaseAuth, email, password);
       localStorage.setItem('isLoggedIn', true);
-      toast.success("Signin successful! Welcome aboard!");
+      toast.success("Sign In Successful!");
       navigate('/');
     } catch (error) {
       console.log(error.code);
-      toast.error("Signin failed. Please try again.");
+      toast.error("Sign In Failed. Please Try Again.");
     }
   };
 
