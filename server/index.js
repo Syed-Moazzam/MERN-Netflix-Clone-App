@@ -5,6 +5,8 @@ import connectToMongo from './db.js';
 import router from './routes/movie.js';
 import path from 'path';
 
+
+const __dirname = path.resolve();
 const app = express();
 
 // middleware
