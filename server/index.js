@@ -3,6 +3,7 @@ import 'dotenv/config.js';
 import cors from 'cors';
 import connectToMongo from './db.js';
 import router from './routes/movie.js';
+import path from 'path';
 
 const app = express();
 
@@ -15,6 +16,9 @@ connectToMongo();
 
 // routes
 app.use('/api', router);
+
+// express.static middleware for serving static files
+app.use(express.static(path.join(__dirname, '../client/build')));
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

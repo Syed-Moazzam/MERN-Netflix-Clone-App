@@ -1,0 +1,23 @@
+{
+    "name": "netflix-clone-app",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build:client": "cd client && npm install && npm run build",
+        "start:server": "cd server && npm start",
+        "start:client": "cd client && npm start"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Syed-Moazzam/MERN-Netflix-Clone-App.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Syed-Moazzam/MERN-Netflix-Clone-App/issues"
+    },
+    "homepage": "https://github.com/Syed-Moazzam/MERN-Netflix-Clone-App#readme",
+    "keywords": [],
+    "description": ""
+}
