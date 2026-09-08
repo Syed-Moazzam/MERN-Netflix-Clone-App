@@ -13,7 +13,7 @@ export default function DesktopHeader({ style, email, showLoginBtn }) {
   const [inputHover, setInputHover] = useState(false);
 
   const links = [
-    { name: "Home", link: "/" },
+    { name: "Home", link: "/browse" },
     { name: "TV Shows", link: "/tv-shows" },
     { name: "Movies", link: "/movies" },
     { name: "My List", link: "/my-list" },
@@ -23,7 +23,7 @@ export default function DesktopHeader({ style, email, showLoginBtn }) {
     localStorage.removeItem('isLoggedIn');
     signOut(firebaseAuth);
     toast.success('Signed Out Successfully!');
-    navigate('/login');
+    navigate('/');
   }
 
   const isLoggedIn = localStorage.getItem('isLoggedIn');
@@ -87,7 +87,7 @@ export default function DesktopHeader({ style, email, showLoginBtn }) {
           <img className="h-16" src={logo} alt="logo" />
         </div>
         <button
-          onClick={() => navigate(showLoginBtn ? "/login" : "/sign-up")}
+          onClick={() => navigate(showLoginBtn ? "/" : "/sign-up")}
           className={'px-4 py-2 rounded text-white font-bold'}
           style={{ backgroundColor: 'rgb(229, 9, 20)' }}
         >

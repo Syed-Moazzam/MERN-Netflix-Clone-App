@@ -37,7 +37,7 @@ export default function Signup() {
       await createUserWithEmailAndPassword(firebaseAuth, email, password);
       localStorage.setItem('isLoggedIn', true);
       toast.success("Signup Successful!");
-      navigate('/');
+      navigate('/browse');
     } catch (error) {
       console.log(error);
       toast.error("Signup Failed. Please Try Again.");
@@ -46,10 +46,10 @@ export default function Signup() {
 
   return (
     <>
-      <div className="content relative z-10 w-screen" style={{ height: '703px' }}>
-        <img className="h-full w-full absolute top-0 left-0 opacity-50" src={background} alt="background" style={{ zIndex: '-1' }} />
+      <div className="content relative z-10 w-screen min-h-screen">
+        <img className="h-full w-full absolute top-0 left-0 object-cover opacity-50" src={background} alt="background" style={{ zIndex: '-1' }} />
         <DesktopHeader showLoginBtn={true} />
-        <div className="body flex flex-col items-center justify-center py-0 px-7 lg:px-0" style={{ height: `${703 - 80}px` }}>
+        <div className="body flex flex-col items-center justify-center py-0 px-7 lg:px-0" style={{ minHeight: 'calc(100vh - 80px)' }}>
           <div className="text text-center">
             <h1 className="text-4xl font-extrabold mb-4 text-white">
               Unlimited movies, TV shows, and more.

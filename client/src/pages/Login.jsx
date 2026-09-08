@@ -18,7 +18,7 @@ function Login() {
       await signInWithEmailAndPassword(firebaseAuth, email, password);
       localStorage.setItem('isLoggedIn', true);
       toast.success("Sign In Successful!");
-      navigate('/');
+      navigate('/browse');
     } catch (error) {
       console.log(error.code);
       toast.error("Sign In Failed. Please Try Again.");
@@ -26,10 +26,10 @@ function Login() {
   };
 
   return (
-    <div className="relative w-screen z-10" style={{ height: '703px' }}>
-      <img className="absolute top-0 left-0 w-full h-full opacity-50" src={background} alt="background" style={{ zIndex: '-1' }} />
+    <div className="relative w-screen min-h-screen z-10">
+      <img className="absolute top-0 left-0 w-full h-full object-cover opacity-50" src={background} alt="background" style={{ zIndex: '-1' }} />
       <DesktopHeader />
-      <div className="flex flex-col items-center justify-center h-full px-4 md:px-0" style={{ height: `${703 - 80}px` }}>
+      <div className="flex flex-col items-center justify-center px-4 md:px-0" style={{ minHeight: 'calc(100vh - 80px)' }}>
         <div className="bg-black bg-opacity-70 w-full rounded-lg p-10 md:p-12 max-w-md">
           <div className="text-white text-2xl font-bold mb-6">Sign In</div>
           <div className="flex flex-col" style={{ gap: '1.5rem' }}>

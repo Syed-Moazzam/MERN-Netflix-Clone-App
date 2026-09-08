@@ -19,11 +19,11 @@ const MobileHeader = () => {
     localStorage.removeItem('isLoggedIn');
     signOut(firebaseAuth);
     toast.success('Signed Out Successfully!');
-    navigate('/login');
+    navigate('/');
   }
 
   const links = [
-    { name: "Home", link: "/" },
+    { name: "Home", link: "/browse" },
     { name: "TV Shows", link: "/tv-shows" },
     { name: "Movies", link: "/movies" },
     { name: "My List", link: "/my-list" },
